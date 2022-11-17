@@ -28,6 +28,7 @@ function start(){
 }
 
 function updateGame(){
+    //zakomentirat ovu liniju ispod za zmijice
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     redraw();
 }
@@ -57,14 +58,18 @@ function updateTargetPosition(i){
 
     if(x - sizeOfTargets/2 < 0){
         targets[i].speedX = Math.random() * maxSpeed;
+        ctx.fillStyle = pickRandomColor();
     }else if(x + sizeOfTargets/2 >= ctx.canvas.width){
         targets[i].speedX = -Math.random() * maxSpeed;
+        ctx.fillStyle = pickRandomColor();
     }
 
     if(y - sizeOfTargets/2 < 0){
         targets[i].speedY = Math.random() * maxSpeed;
+        ctx.fillStyle = pickRandomColor();
     }else if(y + sizeOfTargets/2 >= ctx.canvas.height){
         targets[i].speedY = -Math.random() * maxSpeed;
+        ctx.fillStyle = pickRandomColor();
     }
 
     if(targets[i].speedX > 8)
@@ -79,7 +84,7 @@ function updateTargetPosition(i){
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     redraw();
 }
 
@@ -90,7 +95,7 @@ function redraw() {
         if(t.live){
             updateTargetPosition(i)
             numberOfLive = numberOfLive+1;
-            ctx.fillStyle = "white";
+            //moze se tu stavit izmjena boje za divlje efekte
             ctx.fillRect(t.location.x, t.location.y, t.radius, t.radius);
         }
     }
@@ -140,6 +145,31 @@ function target(){
     }else{
         this.speedY = -Math.random() * maxSpeed
     }
+}
 
+function pickRandomColor(){
+    var random = Math.random();
+    if(random < 0.1){
+        return "white"; 
+    }else if(random >= 0.1 && random < 0.2){
+        return "red"; 
+    }else if(random >= 0.2 && random < 0.3){
+        return "blue"; 
+    }else if(random >= 0.3 && random < 0.4){
+        return "green"; 
+    }else if(random >= 0.4 && random < 0.5){
+        return "brown"; 
+    }else if(random >= 0.5 && random < 0.6){
+        return "yellow"; 
+    }else if(random >= 0.6 && random < 0.7){
+        return "pink"; 
+    }else if(random >= 0.7 && random < 0.8){
+        return "purple"; 
+    }else if(random >= 0.8 && random < 0.9){
+        return "violet"; 
+    }else if(random >= 0.9 && random < 1){
+        return "indigo"; 
+    }
+    
 }
 
