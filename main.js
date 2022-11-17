@@ -1,4 +1,6 @@
-const numberOfTargets = 20
+const numberOfTargets = 20;
+const sizeOfTargets = 20;
+const maxSpeed = 3;
 
 let ctx
 let width
@@ -48,6 +50,32 @@ function initialize() {
     resizeCanvas();
 }
 
+function updateTargetPosition(i){
+
+    var x = targets[i].location.x;
+    var y = targets[i].location.y;
+
+    if(x - sizeOfTargets/2 < 0){
+        targets[i].speedX = Math.random() * maxSpeed;
+    }else if(x + sizeOfTargets/2 >= ctx.canvas.width){
+        targets[i].speedX = -Math.random() * maxSpeed;
+    }
+
+    if(y - sizeOfTargets/2 < 0){
+        targets[i].speedY = Math.random() * maxSpeed;
+    }else if(y + sizeOfTargets/2 >= ctx.canvas.height){
+        targets[i].speedY = -Math.random() * maxSpeed;
+    }
+
+    if(targets[i].speedX > 8)
+        console.log(targets[i].speedX)
+    if(targets[i].speedY > 8)
+        console.log(targets[i].speedY)
+
+    targets[i].location.x = x + targets[i].speedX;
+    targets[i].location.y = y + targets[i].speedY;
+}
+
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -60,6 +88,7 @@ function redraw() {
     for(var i = 0; i<targets.length ;i++){
         var t = targets[i];
         if(t.live){
+            updateTargetPosition(i)
             numberOfLive = numberOfLive+1;
             ctx.fillStyle = "white";
             ctx.fillRect(t.location.x, t.location.y, t.radius, t.radius);
@@ -97,9 +126,20 @@ function target(){
     }
 
     this.location = {x: x- 50, y: y - 50};
-    this.radius = 15;
+    this.radius = sizeOfTargets;
     this.live = true;
-    this.speedX = 3;
-    this.speedY = 3;
+
+    if(Math.random()<0.5){
+        this.speedX = Math.random() * maxSpeed
+    }else{
+        this.speedX = -Math.random() * maxSpeed
+    }
+
+    if(Math.random()<0.5){
+        this.speedY = Math.random() * maxSpeed
+    }else{
+        this.speedY = -Math.random() * maxSpeed
+    }
+
 }
 
