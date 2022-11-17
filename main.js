@@ -1,5 +1,10 @@
+if (/Android|iPhone/i.test(navigator.userAgent)) {
+    var size = 60;
+}else{
+    var size = 20;
+}
+const sizeOfTargets = size
 const numberOfTargets = 20;
-const sizeOfTargets = 20;
 const maxSpeed = 3;
 
 let ctx
