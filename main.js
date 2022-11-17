@@ -1,19 +1,33 @@
+const numberOfTargets = 20
 
+let ctx
+let width
+let height
+let canvas
+let targets
+let interval
 
 function start(){
     
-    let canvas = document.getElementById("canvas");
-    let ctx = canvas.getContext("2d");
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
     
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    width = window.innerWidth;
+    height = window.innerHeight;
     
-    let targets = [];
-    for(var i=0; i<1; i++){
+    targets = [];
+    for(var i=0; i<Math.random()*numberOfTargets; i++){
         targets.push(new target());
     }
 
     initialize();
+
+    interval = setInterval(updateGame, 20);
+}
+
+function updateGame(){
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    redraw();
 }
 
 function initialize() {
@@ -26,8 +40,7 @@ function initialize() {
             var element = targets[i]
             if ( Math.abs(x - element.location.x) < element.radius && Math.abs(y - element.location.y) < element.radius) {
                 element.live = false;
-                targets[i] = element;  
-                redraw();
+                targets[i] = element; 
                 break;
             }
         }
@@ -39,20 +52,36 @@ function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.fillStyle = "black";
-    console.log("da")
     redraw();
 }
 
 function redraw() {
-    console.log()
+    var numberOfLive = 0;
     for(var i = 0; i<targets.length ;i++){
         var t = targets[i];
         if(t.live){
+            numberOfLive = numberOfLive+1;
             ctx.fillStyle = "white";
             ctx.fillRect(t.location.x, t.location.y, t.radius, t.radius);
         }
     }
-}    
+
+    if(numberOfLive == 0){
+        start();
+    }
+
+    generateText()
+}   
+
+function generateText(){
+    ctx.font = '100 40px Roboto';
+    ctx.textAlign = 'right';
+    ctx.fillText(
+        `Caught ${targets.filter(e => !e.live).length}/${targets.length}`,
+        canvas.width - 15,
+        50
+    );
+};
 
 
 
@@ -68,7 +97,7 @@ function target(){
     }
 
     this.location = {x: x- 50, y: y - 50};
-    this.radius = 10;
+    this.radius = 15;
     this.live = true;
     this.speedX = 3;
     this.speedY = 3;
