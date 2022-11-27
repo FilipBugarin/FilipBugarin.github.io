@@ -77,11 +77,6 @@ function updateTargetPosition(i){
         ctx.fillStyle = pickRandomColor();
     }
 
-    if(targets[i].speedX > 8)
-        console.log(targets[i].speedX)
-    if(targets[i].speedY > 8)
-        console.log(targets[i].speedY)
-
     targets[i].location.x = x + targets[i].speedX;
     targets[i].location.y = y + targets[i].speedY;
 }
@@ -150,6 +145,7 @@ function target(){
     }else{
         this.speedY = -Math.random() * maxSpeed
     }
+
 }
 
 function pickRandomColor(){
